@@ -2,10 +2,10 @@
 
 from subprocess import Popen, PIPE
 import os
-import temp
+import tempfile
 import math
 
-t = tempfile.TemporaryDirectory(**param)
+t = tempfile.TemporaryDirectory()
 
 def execute(command):
     p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)

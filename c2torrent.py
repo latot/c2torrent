@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from c2torrent.Delta import Delta, CompleteDelta
+from Delta import Delta, CompleteDelta
 import bencoder
 import os
 
@@ -12,7 +12,7 @@ def opentorrent(file):
 
 def fileintorr(torrent, ifile):
     if b'files' in torrent[b'info']:
-        for i_ in range(len(torrent[b'info'][b'files']))
+        for i_ in range(len(torrent[b'info'][b'files'])):
             i = torrent[b'info'][b'files'][i_]
             if i[b'path'][0].decode("utf-8") == ifile:
                 return i + 1
@@ -21,19 +21,19 @@ def fileintorr(torrent, ifile):
             return 1
     return 0
 
-def replaceintorr(torrent, ifile, data)
+def replaceintorr(torrent, ifile, data):
     if b'files' in torrent[b'info']:
-        for i_ in range(len(torrent[b'info'][b'files']))
+        for i_ in range(len(torrent[b'info'][b'files'])):
             i = torrent[b'info'][b'files'][i_]
             if i[b'path'][0].decode("utf-8") == ifile:
                 del torrent[b'info'][b'files'][i_]
                 data.reverse()
                 for j in data:
                     torrent[b'info'][b'files'].insert(i_, j)
-    else:
-        if torrent[b'info'][b'name'].decode("utf-8") == ifile:
-            torrent[
-            return 1
+#    else:
+#        if torrent[b'info'][b'name'].decode("utf-8") == ifile:
+#            torrent[
+#            return 1
 
 def sortByFiles(torrent, files):
     res = []
@@ -52,8 +52,8 @@ def CDelta(lists, dirD, dirF):
         superD += i['delta']
     CompleteDelta(superD)
 
-def Torrent(torrent1, dir1, dir2, idelta, dirD, files)
-    torrent1 = opentorrent(torrent1)
+def Torrent(itorrent, dir1, dir2, idelta, dirD, files):
+    torrent = opentorrent(itorrent)
     sfiles = []
     d = 0
     files = sortByFiles(files)
@@ -67,7 +67,7 @@ def Torrent(torrent1, dir1, dir2, idelta, dirD, files)
         if not os.path.isfile(df2):
             print("File not found: {}".format(i[1]))
             S = False
-        if not fileintorr(torrent1, i[0]):
+        if not fileintorr(torrent, i[0]):
             print("File not found in torrent: {}".format(i[0]))
             S = False
         if S:

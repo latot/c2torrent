@@ -40,7 +40,7 @@ def sortByFiles(torrent, files):
     if b'files' in torrent[b'info']:
         for i in torrent[b'info'][b'files']:
             for k in files:
-                if i[b'path'][0].decode("utf-8") == k[0]:
+                if i[b'path'][0].decode("utf-8") == k[1]:
                     res.append(k)
     else:
         return files

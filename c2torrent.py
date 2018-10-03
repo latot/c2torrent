@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from Delta import Delta, CompleteDelta
+from Delta import Delta, CompleteDelta, execute
 import bencoder
 import os
 

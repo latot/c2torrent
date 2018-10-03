@@ -130,16 +130,20 @@ def checkdelta(delta, dest):
             print(i)
         pos += i['len']
 
-def CompleteDelta(delta, fdelta):
+def CompleteDelta(delta, dirD, dirF):
     pos = {}
     kk = {}
+    fdelta = []
+    for i in delta:
+        if i['delta'] == i['name'] and i['delta'] not in fdelta:
+            fdelta.append(i['delta'])
     for i in fdelta:
-        kk[i] = open(i, "wb")
+        kk[i] = open(os.path.join(dirD, i), "wb")
         pos[i] = 0
     for i in delta:
         if i['name'] in fdelta:
             kk[i['delta']].seek(i['pos'])
-            r = open(i['dest'], "rb")
+            r = open(os.path.join(dirF, i['dest']), "rb")
             r.seek(pos[i['delta']])
             rr = r.read(i['len'])
             r.close()

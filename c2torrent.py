@@ -36,25 +36,27 @@ def replaceintorr(torrent, ifile, data)
             return 1
 
 def sortByFiles(torrent, files):
+    res = []
     if b'files' in torrent[b'info']:
-        for i_ in range(len(torrent[b'info'][b'files']))
-            i = torrent[b'info'][b'files'][i_]
-            if i[b'path'][0].decode("utf-8") == ifile:
-                del torrent[b'info'][b'files'][i_]
-                data.reverse()
-                for j in data:
-                    torrent[b'info'][b'files'].insert(i_, j)
+        for i in torrent[b'info'][b'files']:
+            for k in files:
+                if i[b'path'][0].decode("utf-8") == k[0]:
+                    res.append(k)
     else:
-        if torrent[b'info'][b'name'].decode("utf-8") == ifile:
-            torrent[
-            return 1
-    return 0
+        return files
+    return res
 
-def Torrent(torrent1, dir1, torrent2, dir2, idelta, files)
+def CDelta(lists, dirD, dirF):
+    superD = []
+    for i in lists:
+        superD += i['delta']
+    CompleteDelta(superD)
+
+def Torrent(torrent1, dir1, dir2, idelta, dirD, files)
     torrent1 = opentorrent(torrent1)
-    torrent2 = opentorrent(torrent2)
     sfiles = []
     d = 0
+    files = sortByFiles(files)
     for i in files:
         S = True
         df1 = os.path.join(dir1, i[0])
@@ -68,10 +70,8 @@ def Torrent(torrent1, dir1, torrent2, dir2, idelta, files)
         if not fileintorr(torrent1, i[0]):
             print("File not found in torrent: {}".format(i[0]))
             S = False
-        if not fileintorr(torrent2, i[1]):
-            print("File not found in torrent: {}".format(i[1]))
-            S = False
         if S:
             execute('xdelta3 -e -s "{}" "{}" "{}.delta"'.format(df1, df2, d))
             sfiles.append({'file1': i[0], 'file2': i[1], 'delta': Delta("d.delta".format(d), idelta, i[0], i[1])})
             d += 1
+    CDelta(sfiles, dirD, dir2)
